@@ -4,10 +4,6 @@ MAINTAINER "Antonia Aguado Mercado" <nomail@gmail.com>
 RUN dnf install -y procps openldap openldap-servers openldap-clients krb5-workstation cyrus-sasl-gssapi cyrus-sasl-ldap nss-pam-ldapd supervisor cronie zabbix-agent python-ldap
 # directoris
 RUN mkdir /opt/docker
-RUN mkdir /var/tmp/home
-RUN mkdir /var/tmp/home/1asix
-RUN mkdir /var/tmp/home/2asix
-RUN mkdir /var/tmp/home/backup
 #Copy github to dockerhub build
 COPY scripts /scripts/
 COPY files /opt/docker
@@ -18,8 +14,6 @@ RUN cp /opt/docker/supervisord.ini /etc/supervisord.d/
 RUN cp /opt/docker/ns* /etc/
 RUN cp -f /opt/docker/ldap.conf /etc/openldap/
 RUN cp -f /opt/docker/krb5.conf /etc/
-RUN cp -f /opt/docker/zabbix_agentd.conf /etc/
-RUN cp -f /opt/docker/zabbix_agentd.psk /etc/zabbix/zabbix_agentd.psk
 #Copying tls files for SSL
 RUN cp /opt/docker/ldapcert.pem /etc/openldap/certs/
 RUN cp /opt/docker/ldapserver.pem /etc/openldap/certs/
@@ -33,4 +27,4 @@ RUN setfacl -m u:ldap:r /etc/krb5.keytab
 RUN /usr/bin/chmod +x /scripts/startup-slapd.sh & bash /scripts/startup-slapd.sh ; exit 0
 #VOLUME [/var/tmp/backup] 
 ENTRYPOINT ["/usr/bin/supervisord", "-c","/etc/supervisord.d/supervisord.ini"]
-EXPOSE 389 587 993 4190 8001  
+#EXPOSE 389 587 993 4190 8001  
