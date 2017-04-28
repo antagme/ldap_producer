@@ -8,7 +8,6 @@ RUN mkdir /opt/docker
 COPY scripts /scripts/
 COPY files /opt/docker
 #Configure on the road the crontab
-RUN chmod +x /scripts/ldapstats.py & crontab -l | { cat; echo "* * * * * /scripts/ldapstats.py";} | crontab -
 #Copy configure scripts to the correspondent directory
 RUN cp /opt/docker/supervisord.ini /etc/supervisord.d/
 RUN cp /opt/docker/ns* /etc/
